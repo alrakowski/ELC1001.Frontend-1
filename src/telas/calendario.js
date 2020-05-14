@@ -21,7 +21,7 @@ export default class Calendar extends Component {
     
     render() {
         return (
-            <>
+            <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.headerTextAno}>{year}</Text>
                     <Text style={styles.headerTextDia}>{days[dayWeek]}, {day} de {months[month]}</Text>
@@ -33,14 +33,37 @@ export default class Calendar extends Component {
                         dayContainerStyle={styles.dayContainer}
                         dayTextStyle={styles.dayText}
                         daySingleSelectedStyle={styles.daySelectedView}
+                        headerTitleStyle={styles.headerTitleStyle}
+                        headerButtonStyle={styles.headerButtonStyle}
+                        weekdayStyle={styles.weekdayStyle}
+                        
                     />
                 </ScrollView>
-            </>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:"#C4D0D0"
+    },
+    weekdayStyle:{
+        color: "#000000",
+        fontWeight:'bold',
+        marginBottom:10
+    },
+    headerButtonStyle:{
+        color: "#D3D3D3",
+        fontSize:30,
+        marginBottom:30
+    },
+    headerTitleStyle:{
+        fontSize:22,
+        marginTop:0,
+        marginBottom:20
+    },
     headerTextAno:{
         marginTop:30,
         marginLeft:20,
@@ -55,10 +78,12 @@ const styles = StyleSheet.create({
     },
     header:{
         height:130,
-        backgroundColor:"#C58882"
+        backgroundColor:"#C58882",
     },
     calendar: {
-        marginTop:20
+        paddingTop:30,
+        paddingBottom:20,
+        backgroundColor:"#FFF"
     },
     dayContainer: {
         marginBottom:10,
@@ -67,7 +92,6 @@ const styles = StyleSheet.create({
         fontSize:16,
     },
     conteinerCalendar: {
-       flex:1
     },
     daySelectedView:{
         backgroundColor:"#C58882"
