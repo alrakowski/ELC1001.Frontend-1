@@ -28,32 +28,6 @@ export default class Calendar extends Component {
                     <Text style={styles.headerTextAno}>{year}</Text>
                     <Text style={styles.headerTextDia}>{days[dayWeek]}, {day} de {months[month]}</Text>
                 </View>
-                <ScrollView style={styles.conteinerCalendar}>
-                    <Calendario.Picker style={styles.calendar}
-                        onSelected={this.onSelected}
-                        selectedType='single' 
-                        dayContainerStyle={styles.dayContainer}
-                        dayTextStyle={styles.dayText}
-                        daySingleSelectedStyle={styles.daySelectedView}
-                        headerTitleStyle={styles.headerTitleStyle}
-                        headerButtonStyle={styles.headerButtonStyle}
-                        weekdayStyle={styles.weekdayStyle}
-                    />
-                </ScrollView>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')} style={styles.button}>
-                        <Add width={90} height={90} />
-                </TouchableHighlight>
-                <View style={styles.buttonOpt}>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')}>
-                        <Text style={styles.textButtonOpt} >Manhã</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')}>
-                        <Text style={styles.textButtonOpt} >Tarde</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')}>
-                        <Text style={styles.textButtonOpt} >Noite</Text>
-                    </TouchableHighlight>
-                </View>
             </View>
         )
     }
