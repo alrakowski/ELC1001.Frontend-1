@@ -14,7 +14,7 @@ var months = ['Janeiro','Fevereiro','Março',
             'Abril','Maio','Junho','Julho',
             'Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-export default class Calendar extends Component {
+export default class CalendarAddLook extends Component {
 
     onSelected ({ selected, selectedStart, selectedEnd }) {
         // Your code

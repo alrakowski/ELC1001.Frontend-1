@@ -7,6 +7,7 @@ import ComporLook from '../telas/comporLook'
 import Looks from '../telas/looks'
 import MainMenu from '../telas/menuPrincipal'  
 import Calendar from '../telas/calendario'
+import CalendarAddLook from '../telas/calendarioAddLook'
 
 import Login from '../telas/auth'
 import SignIn from '../telas/auth/signin'
@@ -41,6 +42,7 @@ const DrawerRoutes = createDrawerNavigator({
     Looks: Looks,
     ComporLook: ComporLook,
     Calendar: Calendar,
+    CalendarAddLook: CalendarAddLook,
 
     Camera: Camera,
     Acrescentar: Acrescentar,
@@ -64,6 +66,7 @@ const StackRoutes = createStackNavigator({
     Looks: { screen: Looks },
     ComporLook: { screen: ComporLook },
     Calendar: { screen: Calendar },
+    CalendarAddLook: { screen: CalendarAddLook },
     GuardaRoupa: { screen: GuardaRoupa },
     Camera: { screen: Camera },
     Acrescentar: { screen: Acrescentar },

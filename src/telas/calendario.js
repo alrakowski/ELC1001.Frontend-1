@@ -44,13 +44,13 @@ export default class Calendar extends Component {
                         <Add width={90} height={90} />
                 </TouchableHighlight>
                 <View style={styles.buttonOpt}>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')}>
+                    <TouchableHighlight onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
                         <Text style={styles.textButtonOpt} >Manhã</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')}>
+                    <TouchableHighlight onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
                         <Text style={styles.textButtonOpt} >Tarde</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')}>
+                    <TouchableHighlight onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
                         <Text style={styles.textButtonOpt} >Noite</Text>
                     </TouchableHighlight>
                 </View>
