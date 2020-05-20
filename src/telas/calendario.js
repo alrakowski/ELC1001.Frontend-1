@@ -97,9 +97,15 @@ export default class Calendar extends Component {
 
                 {this.state.showAddLook ? ( 
                     <>
-                        <View style={styles.viewAddLook}>
-                            
-                        </View>
+                        <ScrollView style={styles.viewAddLook}>
+                            <View style={styles.viewLookMsg}>
+                                <Text style={styles.textLook}>ainda não foram registrados looks nesta data!</Text>
+                            </View>
+                            <TouchableOpacity  style={styles.buttonAddViewLook} onPress={this.ShowHideButtonOpt}>
+                                <Add width={90} height={90} />
+                            </TouchableOpacity>
+                            <Text style={styles.textAddLook}>Acrescentar look</Text>
+                        </ScrollView>
                         <View style={styles.bottonAddLook}>
                             <TouchableOpacity  style={styles.buttonNext} onPress={this.Prev}>
                                 <Icon name="chevron-right" size={50} color="#000000" />
@@ -120,6 +126,30 @@ export default class Calendar extends Component {
 }
 
 const styles = StyleSheet.create({
+    textAddLook:{
+        fontSize:18,
+        textAlign:"center",
+        marginTop:-10
+    },
+    buttonAddViewLook:{
+        marginLeft:"38%",
+        marginTop:60,
+        backgroundColor:"#FFF",
+        maxWidth:55,
+        minWidth:55
+    },
+    viewLookMsg:{
+        borderRadius:10,
+        borderColor:"#000000",
+        borderWidth:2,
+        marginHorizontal:50,
+        marginTop:50,
+        padding:20
+    },
+    textLook:{
+        fontSize:18,
+        textAlign:"center"
+    },
     buttonClose: {
         marginBottom:20,
         marginLeft:'45%',
