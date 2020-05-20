@@ -24,6 +24,7 @@ export default class Calendar extends Component {
     constructor() {
         super();
         this.state = {
+          showButtonOpt: false,
           showAddLook: true,
         };
     }
@@ -34,6 +35,23 @@ export default class Calendar extends Component {
         } else {
           this.setState({ showButtonOpt: true });
         }
+    };
+
+    ShowHideAddLook = () => {
+        if (this.state.showAddLook == true) {
+          this.setState({ showAddLook: false });
+        } else {
+          this.setState({ showAddLook: true });
+          this.setState({ showButtonOpt: false });
+        }
+    };
+
+    Prev = () => {
+
+    };
+
+    Next = () => {
+
     };
 
     onSelected ({ selected, selectedStart, selectedEnd }) {
@@ -65,29 +83,36 @@ export default class Calendar extends Component {
                 </TouchableOpacity>
                 {this.state.showButtonOpt ? ( 
                     <View style={styles.buttonOpt}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
+                        <TouchableOpacity onPress={this.ShowHideAddLook}>
                             <Text style={styles.textButtonOpt} >Manhã</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() =>this.props.navigation.navigate('CalendarAddLook')}>
+                        <TouchableOpacity onPress={this.ShowHideAddLook}>
                             <Text style={styles.textButtonOpt} >Tarde</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
+                        <TouchableOpacity onPress={this.ShowHideAddLook}>
                             <Text style={styles.textButtonOpt} >Noite</Text>
                         </TouchableOpacity>
                     </View>
                 ) : null}
 
-                <View style={styles.viewAddLook}>
-                    
-                </View>
-                <View style={styles.bottonAddLook}>
-                    <TouchableOpacity  style={styles.buttonNext} onPress={this.ShowHideButtonOpt}>
-                        <Icon name="chevron-right" size={50} color="#000000" />
-                    </TouchableOpacity>
-                    <TouchableOpacity  style={styles.buttonPrev} onPress={this.ShowHideButtonOpt}>
-                        <Icon name="chevron-left" size={50} color="#000000" />
-                    </TouchableOpacity>
-                </View>
+                {this.state.showAddLook ? ( 
+                    <>
+                        <View style={styles.viewAddLook}>
+                            
+                        </View>
+                        <View style={styles.bottonAddLook}>
+                            <TouchableOpacity  style={styles.buttonNext} onPress={this.Prev}>
+                                <Icon name="chevron-right" size={50} color="#000000" />
+                            </TouchableOpacity>
+                            <TouchableOpacity  style={styles.buttonPrev} onPress={this.Next}>
+                                <Icon name="chevron-left" size={50} color="#000000" />
+                            </TouchableOpacity>
+                            <TouchableOpacity  style={styles.buttonClose} onPress={this.ShowHideAddLook}>
+                                <Icon name="close" size={50} color="#000000" />
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                ) : null}
 
             </View>
         )
@@ -95,6 +120,19 @@ export default class Calendar extends Component {
 }
 
 const styles = StyleSheet.create({
+    buttonClose: {
+        marginBottom:20,
+        marginLeft:'45%',
+        position:'absolute',
+        bottom: 0,
+        zIndex:5,
+        borderRadius:50,
+        borderColor:"#000000",
+        borderWidth:2,
+        backgroundColor:"#FFF",
+        maxWidth:55,
+        minWidth:55
+    },
     buttonPrev: {
         marginBottom:20,
         marginLeft:'5%',
@@ -105,7 +143,8 @@ const styles = StyleSheet.create({
         borderColor:"#000000",
         borderWidth:2,
         backgroundColor:"#FFF",
-        width:20
+        maxWidth:55,
+        minWidth:55
     },
     buttonNext: {
         marginBottom:20,
@@ -118,7 +157,8 @@ const styles = StyleSheet.create({
         borderColor:"#000000",
         borderWidth:2,
         backgroundColor:"#FFF",
-        width:20
+        maxWidth:55,
+        minWidth:55
     },
     bottonAddLook:{
         position:'absolute',
@@ -172,10 +212,11 @@ const styles = StyleSheet.create({
     headerButtonStyle:{
         color: "#D3D3D3",
         fontSize:30,
-        marginBottom:30
+        marginBottom:22
     },
     headerTitleStyle:{
         fontSize:22,
+        width:200,
         marginTop:0,
         marginBottom:20
     },
