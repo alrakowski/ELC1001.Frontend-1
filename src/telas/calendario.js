@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { View, ScrollView, Text, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { Calendar as Calendario } from 'react-native-plain-calendar'
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+Icon.loadFont();
+
 import Add from '../assets/icons/botaoadd.svg'
+
 
 var year = new Date().getFullYear();
 var dayWeek = new Date().getDay();
@@ -73,7 +77,17 @@ export default class Calendar extends Component {
                     </View>
                 ) : null}
 
-
+                <View style={styles.viewAddLook}>
+                    
+                </View>
+                <View style={styles.bottonAddLook}>
+                    <TouchableOpacity  style={styles.buttonNext} onPress={this.ShowHideButtonOpt}>
+                        <Icon name="chevron-right" size={50} color="#000000" />
+                    </TouchableOpacity>
+                    <TouchableOpacity  style={styles.buttonPrev} onPress={this.ShowHideButtonOpt}>
+                        <Icon name="chevron-left" size={50} color="#000000" />
+                    </TouchableOpacity>
+                </View>
 
             </View>
         )
@@ -81,6 +95,50 @@ export default class Calendar extends Component {
 }
 
 const styles = StyleSheet.create({
+    buttonPrev: {
+        marginBottom:20,
+        marginLeft:'5%',
+        position:'absolute',
+        bottom: 0,
+        zIndex:5,
+        borderRadius:50,
+        borderColor:"#000000",
+        borderWidth:2,
+        backgroundColor:"#FFF",
+        width:20
+    },
+    buttonNext: {
+        marginBottom:20,
+        right:0,
+        marginRight:'5%',
+        position:'absolute',
+        bottom: 0,
+        zIndex:5,
+        borderRadius:50,
+        borderColor:"#000000",
+        borderWidth:2,
+        backgroundColor:"#FFF",
+        width:20
+    },
+    bottonAddLook:{
+        position:'absolute',
+        bottom: 0,
+        zIndex:5,
+        backgroundColor:"#C4D0D0",
+        paddingVertical:10,
+        height:110,
+        width:"100%",
+        flexDirection:'row'
+    },
+    viewAddLook:{
+        position:'absolute',
+        top: 0,
+        width:'100%',
+        height:'100%',
+        zIndex:4,
+        backgroundColor:"#FFF",
+        marginTop:200
+    },
     textButtonOpt:{
         fontSize:20
     },
