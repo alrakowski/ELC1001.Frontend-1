@@ -6,7 +6,7 @@ import StackRoutes from './Navigation/routes';
 export default function App() {
     return (
         <>
-            <StatusBar backgroundColor="#C58882" />
+            <StatusBar backgroundColor="#C88882" />
             <StackRoutes />
         </>
 

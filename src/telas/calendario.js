@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, StyleSheet, TouchableHighlight } from 'react-native'
+import { View, ScrollView, Text, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { Calendar as Calendario } from 'react-native-plain-calendar'
 
 import Add from '../assets/icons/botaoadd.svg'
@@ -15,6 +15,22 @@ var months = ['Janeiro','Fevereiro','Março',
             'Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
 export default class Calendar extends Component {
+
+
+    constructor() {
+        super();
+        this.state = {
+          showAddLook: true,
+        };
+    }
+
+    ShowHideButtonOpt = () => {
+        if (this.state.showButtonOpt == true) {
+          this.setState({ showButtonOpt: false });
+        } else {
+          this.setState({ showButtonOpt: true });
+        }
+    };
 
     onSelected ({ selected, selectedStart, selectedEnd }) {
         // Your code
@@ -40,20 +56,25 @@ export default class Calendar extends Component {
                         weekdayStyle={styles.weekdayStyle}
                     />
                 </ScrollView>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Camera')} style={styles.button}>
+                <TouchableOpacity  style={styles.button} onPress={this.ShowHideButtonOpt}>
                         <Add width={90} height={90} />
-                </TouchableHighlight>
-                <View style={styles.buttonOpt}>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
-                        <Text style={styles.textButtonOpt} >Manhã</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
-                        <Text style={styles.textButtonOpt} >Tarde</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
-                        <Text style={styles.textButtonOpt} >Noite</Text>
-                    </TouchableHighlight>
-                </View>
+                </TouchableOpacity>
+                {this.state.showButtonOpt ? ( 
+                    <View style={styles.buttonOpt}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
+                            <Text style={styles.textButtonOpt} >Manhã</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() =>this.props.navigation.navigate('CalendarAddLook')}>
+                            <Text style={styles.textButtonOpt} >Tarde</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CalendarAddLook')}>
+                            <Text style={styles.textButtonOpt} >Noite</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : null}
+
+
+
             </View>
         )
     }
@@ -70,7 +91,7 @@ const styles = StyleSheet.create({
         borderRadius:10,
         borderColor:"#000000",
         borderWidth:2,
-        marginBottom:60,
+        marginBottom:90,
         marginLeft:80,
         backgroundColor:"#FFF",
         paddingHorizontal:30,
