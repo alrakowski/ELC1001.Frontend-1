@@ -8,15 +8,21 @@ Icon.loadFont();
 import Add from '../assets/icons/botaoadd.svg'
 
 
-var year = new Date().getFullYear();
-var dayWeek = new Date().getDay();
-var month = new Date().getMonth();
-var day = new Date().getDate("dd");
 var days = ['Domingo','Segunda-feira','Terça-feira',
             'Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
 var months = ['Janeiro','Fevereiro','Março',
             'Abril','Maio','Junho','Julho',
             'Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function getAno (date){
+    return  new Date(date).getFullYear();
+}
+
+function getDia (date){
+    return  days[new Date(date).getDay()] + ", " + 
+                new Date(date).getDate("dd") + " de " + 
+                months[new Date(date).getMonth()]
+}
 
 export default class Calendar extends Component {
 
@@ -25,8 +31,12 @@ export default class Calendar extends Component {
         super();
         this.state = {
           showButtonOpt: false,
-          showAddLook: true,
+          showAddLook: false,
+          showMsgAddLook: false,
+          dataAtual: Date(),
+          turno:"manhã",
         };
+        
     }
 
     ShowHideButtonOpt = () => {
@@ -43,6 +53,15 @@ export default class Calendar extends Component {
         } else {
           this.setState({ showAddLook: true });
           this.setState({ showButtonOpt: false });
+          this.setState({ showMsgAddLook: false });
+        }
+    };
+
+    ShowHideMsgAddLook = () => {
+        if (this.state.showMsgAddLook == true) {
+          this.setState({ showMsgAddLook: false });
+        } else {
+          this.setState({ showMsgAddLook: true });
         }
     };
 
@@ -54,17 +73,20 @@ export default class Calendar extends Component {
 
     };
 
-    onSelected ({ selected, selectedStart, selectedEnd }) {
-        // Your code
+    onSelected = ({ selected, selectedStart, selectedEnd }) => {
+        this.setState({ dataAtual: selected });
     }
+
+    
 
     
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.headerTextAno}>{year}</Text>
-                    <Text style={styles.headerTextDia}>{days[dayWeek]}, {day} de {months[month]}</Text>
+                    <Text style={styles.headerTextAno}>{getAno(this.state.dataAtual)}</Text>
+                    <Text style={styles.headerTextDia}>{getDia(this.state.dataAtual)}</Text>
+                    <Text style={styles.headerTextTurno}>{this.state.turno}</Text>
                 </View>
                 <ScrollView style={styles.conteinerCalendar}>
                     <Calendario.Picker style={styles.calendar}
@@ -101,10 +123,13 @@ export default class Calendar extends Component {
                             <View style={styles.viewLookMsg}>
                                 <Text style={styles.textLook}>ainda não foram registrados looks nesta data!</Text>
                             </View>
-                            <TouchableOpacity  style={styles.buttonAddViewLook} onPress={this.ShowHideButtonOpt}>
+                            <TouchableOpacity  style={styles.buttonAddViewLook} onPress={this.ShowHideMsgAddLook}>
                                 <Add width={90} height={90} />
                             </TouchableOpacity>
                             <Text style={styles.textAddLook}>Acrescentar look</Text>
+                            {this.state.showMsgAddLook ? ( 
+                                <Text style={styles.msgAddLook}>Clique Botão!</Text>
+                            ) : null}
                         </ScrollView>
                         <View style={styles.bottonAddLook}>
                             <TouchableOpacity  style={styles.buttonNext} onPress={this.Prev}>
@@ -126,6 +151,11 @@ export default class Calendar extends Component {
 }
 
 const styles = StyleSheet.create({
+    msgAddLook:{
+        fontSize:18,
+        textAlign:"center",
+        marginTop:20
+    },
     textAddLook:{
         fontSize:18,
         textAlign:"center",
@@ -152,7 +182,7 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
         marginBottom:20,
-        marginLeft:'45%',
+        marginLeft:'42%',
         position:'absolute',
         bottom: 0,
         zIndex:5,
@@ -253,14 +283,19 @@ const styles = StyleSheet.create({
     headerTextAno:{
         marginTop:30,
         marginLeft:20,
-        fontSize:20,
+        fontSize:18,
         color: "#D3D3D3", 
     },
     headerTextDia:{
         marginTop:0,
         marginLeft:20,
-        fontSize:30,
+        fontSize:25,
         color: "#FFF", 
+    },
+    headerTextTurno:{
+        marginLeft:20,
+        fontSize:18,
+        color: "#D3D3D3" 
     },
     header:{
         height:130,
