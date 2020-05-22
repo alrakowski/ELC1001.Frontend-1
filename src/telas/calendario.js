@@ -34,7 +34,7 @@ export default class Calendar extends Component {
           showAddLook: false,
           showMsgAddLook: false,
           dataAtual: Date(),
-          turno:"manhã",
+          turno:"",
         };
         
     }
@@ -50,6 +50,7 @@ export default class Calendar extends Component {
     ShowHideAddLook = () => {
         if (this.state.showAddLook == true) {
           this.setState({ showAddLook: false });
+          this.setState({ dataAtual: Date() });
         } else {
           this.setState({ showAddLook: true });
           this.setState({ showButtonOpt: false });
@@ -66,20 +67,48 @@ export default class Calendar extends Component {
     };
 
     Prev = () => {
-
+        if(this.state.turno == ""){
+            this.setState({ turno: "manhã" });
+        } else if (this.state.turno == "manhã"){
+            this.setState({ turno: "noite" }); 
+            var d = new Date(this.state.dataAtual);
+            this.setState({ dataAtual: new Date(
+                d.getFullYear(),
+                d.getMonth(),
+                d.getDate() - 1)});
+        } else if (this.state.turno == "tarde"){
+            this.setState({ turno: "manhã" });
+        } else {
+            this.setState({ turno: "tarde" });
+        }
     };
 
     Next = () => {
-
+        if(this.state.turno == ""){
+            this.setState({ turno: "manhã" });
+        } else if (this.state.turno == "manhã"){
+            this.setState({ turno: "tarde" });
+        } else if (this.state.turno == "tarde"){
+            this.setState({ turno: "noite" });
+        } else {
+            this.setState({ turno: "manhã" });
+            var d = new Date(this.state.dataAtual);
+            this.setState({ dataAtual: new Date(
+                d.getFullYear(),
+                d.getMonth(),
+                d.getDate() + 1)}); 
+        }
     };
 
     onSelected = ({ selected, selectedStart, selectedEnd }) => {
-        this.setState({ dataAtual: selected });
+        if (new Date(selected).getFullYear() == "1969"){
+            this.setState({ dataAtual: Date() });
+        } else {
+            this.setState({ dataAtual: selected });
+        }
     }
 
-    
-
-    
+   
     render() {
         return (
             <View style={styles.container}>
@@ -132,10 +161,10 @@ export default class Calendar extends Component {
                             ) : null}
                         </ScrollView>
                         <View style={styles.bottonAddLook}>
-                            <TouchableOpacity  style={styles.buttonNext} onPress={this.Prev}>
+                            <TouchableOpacity  style={styles.buttonNext} onPress={this.Next}>
                                 <Icon name="chevron-right" size={50} color="#000000" />
                             </TouchableOpacity>
-                            <TouchableOpacity  style={styles.buttonPrev} onPress={this.Next}>
+                            <TouchableOpacity  style={styles.buttonPrev} onPress={this.Prev}>
                                 <Icon name="chevron-left" size={50} color="#000000" />
                             </TouchableOpacity>
                             <TouchableOpacity  style={styles.buttonClose} onPress={this.ShowHideAddLook}>
