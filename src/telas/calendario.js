@@ -34,6 +34,7 @@ export default class Calendar extends Component {
           showAddLook: false,
           showMsgAddLook: false,
           dataAtual: Date(),
+          selDate: Date(),
           turno:"",
         };
         
@@ -47,16 +48,31 @@ export default class Calendar extends Component {
         }
     };
 
-    ShowHideAddLook = () => {
+    ShowHideAddLook = (turno) => {
         if (this.state.showAddLook == true) {
           this.setState({ showAddLook: false });
-          this.setState({ dataAtual: Date() });
+          this.setState({ dataAtual: this.state.selDate });
+          this.setState({ turno: "" });
         } else {
           this.setState({ showAddLook: true });
           this.setState({ showButtonOpt: false });
           this.setState({ showMsgAddLook: false });
+          this.setState({ turno: turno});
+          this.setState({ selDate: new Date(this.state.dataAtual) });
         }
     };
+
+    ShowHideAddLookManha = () => {
+        this.ShowHideAddLook("manhã")
+    }
+
+    ShowHideAddLookTarde = () => {
+        this.ShowHideAddLook("tarde")
+    }
+
+    ShowHideAddLookNoite = () => {
+        this.ShowHideAddLook("noite")
+    }
 
     ShowHideMsgAddLook = () => {
         if (this.state.showMsgAddLook == true) {
@@ -134,13 +150,13 @@ export default class Calendar extends Component {
                 </TouchableOpacity>
                 {this.state.showButtonOpt ? ( 
                     <View style={styles.buttonOpt}>
-                        <TouchableOpacity onPress={this.ShowHideAddLook}>
+                        <TouchableOpacity onPress={this.ShowHideAddLookManha}>
                             <Text style={styles.textButtonOpt} >Manhã</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.ShowHideAddLook}>
+                        <TouchableOpacity onPress={this.ShowHideAddLookTarde}>
                             <Text style={styles.textButtonOpt} >Tarde</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.ShowHideAddLook}>
+                        <TouchableOpacity onPress={this.ShowHideAddLookNoite}>
                             <Text style={styles.textButtonOpt} >Noite</Text>
                         </TouchableOpacity>
                     </View>
