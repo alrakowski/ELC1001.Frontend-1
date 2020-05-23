@@ -54,13 +54,14 @@ export default class Calendar extends Component {
     };
 
     ShowHideAddLook = async (turno) => {
-        this.setState({ turno: turno});
-        this.hasLook();
+        
         if (this.state.showAddLook == true) {
           this.setState({ showAddLook: false });
           this.setState({ dataAtual: this.state.selDate });
           this.setState({ turno: "" });
         } else {
+          await this.setState({ turno: turno});
+          await this.hasLook();
           this.setState({ showAddLook: true });
           this.setState({ showButtonOpt: false });
           this.setState({ showMsgAddLook: false });
