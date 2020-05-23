@@ -8,7 +8,8 @@ Icon.loadFont();
 
 import Add from '../assets/icons/botaoadd.svg'
 
-const looks = [[new Date("2020/05/21"), "src1"], [new Date("2020/05/23"), "src2"]];
+const looks = [[new Date("2020/05/21"), "tarde", require("../assets/images/looks.jpeg")],
+             [new Date("2020/05/23"), "noite", require("../assets/images/looks.jpeg")]];
 
 
 var days = ['Domingo','Segunda-feira','Terça-feira',
@@ -39,7 +40,7 @@ export default class Calendar extends Component {
           dataAtual: Date(),
           selDate: Date(),
           turno:"",
-          hasLook:false,
+          look:"",
         };
         
     }
@@ -52,7 +53,8 @@ export default class Calendar extends Component {
         }
     };
 
-    ShowHideAddLook = (turno) => {
+    ShowHideAddLook = async (turno) => {
+        this.setState({ turno: turno});
         this.hasLook();
         if (this.state.showAddLook == true) {
           this.setState({ showAddLook: false });
@@ -88,47 +90,57 @@ export default class Calendar extends Component {
     };
 
 
-    hasLook = () => {
+    hasLook = async () => {
+        var k;
         looks.map( look => {
-                if(look[1] == "src2"){
-                    console.log(look[1])
+                var d = new Date(look[0])
+                var dAt = new Date(this.state.dataAtual)
+                if(d.getFullYear() == dAt.getFullYear()
+                        && d.getMonth() == dAt.getMonth()
+                        && d.getDate("dd") == dAt.getDate("dd") && look[1] == this.state.turno){
+                    k = look[2];
+                } else {
+                    k =""
                 }
             }
-        ); 
+        );
+        await this.setState({ look: k }); 
     }
 
-    Prev = () => {
+    Prev = async () => {
         if(this.state.turno == ""){
-            this.setState({ turno: "manhã" });
+            await this.setState({ turno: "manhã" });
         } else if (this.state.turno == "manhã"){
-            this.setState({ turno: "noite" }); 
+            await this.setState({ turno: "noite" }); 
             var d = new Date(this.state.dataAtual);
-            this.setState({ dataAtual: new Date(
+            await this.setState({ dataAtual: new Date(
                 d.getFullYear(),
                 d.getMonth(),
                 d.getDate() - 1)});
         } else if (this.state.turno == "tarde"){
-            this.setState({ turno: "manhã" });
+            await this.setState({ turno: "manhã" });
         } else {
-            this.setState({ turno: "tarde" });
+            await this.setState({ turno: "tarde" });
         }
+        this.hasLook();
     };
 
-    Next = () => {
+    Next = async () => {
         if(this.state.turno == ""){
-            this.setState({ turno: "manhã" });
+            await this.setState({ turno: "manhã" });
         } else if (this.state.turno == "manhã"){
-            this.setState({ turno: "tarde" });
+            await this.setState({ turno: "tarde" });
         } else if (this.state.turno == "tarde"){
-            this.setState({ turno: "noite" });
+            await this.setState({ turno: "noite" });
         } else {
-            this.setState({ turno: "manhã" });
+            await this.setState({ turno: "manhã" });
             var d = new Date(this.state.dataAtual);
-            this.setState({ dataAtual: new Date(
+            await this.setState({ dataAtual: new Date(
                 d.getFullYear(),
                 d.getMonth(),
                 d.getDate() + 1)}); 
         }
+        this.hasLook();
     };
 
     onSelected = ({ selected, selectedStart, selectedEnd }) => {
@@ -181,7 +193,7 @@ export default class Calendar extends Component {
                     <>
                         
                         <ScrollView style={styles.viewAddLook}>
-                            {this.state.hasLook ? ( 
+                            {this.state.look == "" ? ( 
                                 <>
                                     <View style={styles.viewLookMsg}>
                                         <Text style={styles.textLook}>ainda não foram registrados looks nesta data!</Text>
@@ -195,7 +207,7 @@ export default class Calendar extends Component {
                                     ) : null}
                                 </>
                             ) : 
-                                <Image style={styles.lookImg} source={require('../assets/images/looks.jpeg')} />
+                                <Image style={styles.lookImg} source={this.state.look} />
                             }
                         </ScrollView>
                         <View style={styles.bottonAddLook}>
