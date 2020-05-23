@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { View, Image, ScrollView, Text, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { Calendar as Calendario } from 'react-native-plain-calendar'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
 Icon.loadFont();
 
 import Add from '../assets/icons/botaoadd.svg'
+
+const looks = [[new Date("2020/05/21"), "src1"], [new Date("2020/05/23"), "src2"]];
 
 
 var days = ['Domingo','Segunda-feira','Terça-feira',
@@ -36,6 +39,7 @@ export default class Calendar extends Component {
           dataAtual: Date(),
           selDate: Date(),
           turno:"",
+          hasLook:false,
         };
         
     }
@@ -49,6 +53,7 @@ export default class Calendar extends Component {
     };
 
     ShowHideAddLook = (turno) => {
+        this.hasLook();
         if (this.state.showAddLook == true) {
           this.setState({ showAddLook: false });
           this.setState({ dataAtual: this.state.selDate });
@@ -81,6 +86,16 @@ export default class Calendar extends Component {
           this.setState({ showMsgAddLook: true });
         }
     };
+
+
+    hasLook = () => {
+        looks.map( look => {
+                if(look[1] == "src2"){
+                    console.log(look[1])
+                }
+            }
+        ); 
+    }
 
     Prev = () => {
         if(this.state.turno == ""){
@@ -123,8 +138,8 @@ export default class Calendar extends Component {
             this.setState({ dataAtual: selected });
         }
     }
-
    
+
     render() {
         return (
             <View style={styles.container}>
@@ -164,17 +179,24 @@ export default class Calendar extends Component {
 
                 {this.state.showAddLook ? ( 
                     <>
+                        
                         <ScrollView style={styles.viewAddLook}>
-                            <View style={styles.viewLookMsg}>
-                                <Text style={styles.textLook}>ainda não foram registrados looks nesta data!</Text>
-                            </View>
-                            <TouchableOpacity  style={styles.buttonAddViewLook} onPress={this.ShowHideMsgAddLook}>
-                                <Add width={90} height={90} />
-                            </TouchableOpacity>
-                            <Text style={styles.textAddLook}>Acrescentar look</Text>
-                            {this.state.showMsgAddLook ? ( 
-                                <Text style={styles.msgAddLook}>Clique Botão!</Text>
-                            ) : null}
+                            {this.state.hasLook ? ( 
+                                <>
+                                    <View style={styles.viewLookMsg}>
+                                        <Text style={styles.textLook}>ainda não foram registrados looks nesta data!</Text>
+                                    </View>
+                                    <TouchableOpacity  style={styles.buttonAddViewLook} onPress={this.ShowHideMsgAddLook}>
+                                        <Add width={90} height={90} />
+                                    </TouchableOpacity>
+                                    <Text style={styles.textAddLook}>Acrescentar look</Text>
+                                    {this.state.showMsgAddLook ? ( 
+                                        <Text style={styles.msgAddLook}>Clique Botão!</Text>
+                                    ) : null}
+                                </>
+                            ) : 
+                                <Image style={styles.lookImg} source={require('../assets/images/looks.jpeg')} />
+                            }
                         </ScrollView>
                         <View style={styles.bottonAddLook}>
                             <TouchableOpacity  style={styles.buttonNext} onPress={this.Next}>
@@ -196,6 +218,10 @@ export default class Calendar extends Component {
 }
 
 const styles = StyleSheet.create({
+    lookImg:{
+        width:"100%",
+        marginTop:10
+    },
     msgAddLook:{
         fontSize:18,
         textAlign:"center",
